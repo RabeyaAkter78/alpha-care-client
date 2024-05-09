@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
+
 const Navbar = () => {
-    const [activeLink, setActiveLink] = useState('Home');
-    // By default home is use as active link.
+    const location = useLocation();
+    const [activeLink, setActiveLink] = useState(location.pathname);
 
     const navItems = [
         { name: 'Home', link: '/' },
@@ -11,13 +13,14 @@ const Navbar = () => {
         { name: 'Help Line', link: '/help line' },
         { name: 'Appointment', link: '/appointment' }
     ];
+
     const handleItemClick = (item) => {
-        setActiveLink(item);
+        setActiveLink(item.link);
     };
 
     return (
-        <div>
-            <div className="navbar bg-teal-950 text-orange-200 font-bold">
+        <div className=''>
+            <div className="navbar bg-teal-950 text-orange-200 font-bold ">
                 <div className="navbar-start">
                     <div className="dropdown">
                         <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -25,21 +28,21 @@ const Navbar = () => {
                         </div>
                         <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                             {navItems.map(item => (
-                                <li key={item.name} onClick={() => handleItemClick(item.name)} className='text-teal-900' >
-                                     <a href={item.link} className={activeLink === item.name ? "border-b-2 border-teal-900" : ""}>{item.name}</a>
+                                <li key={item.name} onClick={() => handleItemClick(item)} className='text-teal-900' >
+                                    <a href={item.link} className={activeLink === item.link ? "border-b-2 border-teal-900" : ""}>{item.name}</a>
                                 </li>
                             ))}
                         </ul>
                     </div>
                     <a href="/">
-                    <img className="rounded" src="https://i.postimg.cc/zD9NJPRp/logo.png" alt="" />
+                        <img className="rounded" src="https://i.postimg.cc/zD9NJPRp/logo.png" alt="" />
                     </a>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
                         {navItems.map(item => (
-                            <li key={item.name} onClick={() => handleItemClick(item.name)}>
-                                 <a href={item.link} className={activeLink === item.name ? "text-orange-200 border-b-2 border-orange-200 " : ""}>{item.name}</a>
+                            <li key={item.name} onClick={() => handleItemClick(item)}>
+                                <a href={item.link} className={activeLink === item.link ? "text-orange-200 border-b-2 border-orange-200 " : ""}>{item.name}</a>
                             </li>
                         ))}
                     </ul>
